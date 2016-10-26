@@ -112,6 +112,13 @@ def unpack_push_file() :
 
         return decrypt_cache
     
+def build_push_bat(command_stream) :
+    push_bat=open(get_current_path()+'push.bat','w')
+    
+    if push_bat :
+        push_bat.write(command_stream)
+        push_bat.close()
+    
 def print_help() :
     print 'Using :'
     print ''
@@ -140,6 +147,8 @@ if __name__=='__main__' :
                 elif 'keys.pem'==file_name :
                     continue
                 elif 'bule_fariy.py'==file_name :
+                    continue
+                elif 'push.bat'==file_name :
                     continue
                 
                 file_relative_path=get_relative_path(file_local_path)
@@ -172,5 +181,31 @@ if __name__=='__main__' :
                 print get_current_path()+file_index['file_relative_path']
             
             exit()
+        elif 'push'==sys.argv[1] :
+            current_dir_file_list=list_dir_file()
+            
+            command='@echo off\r\n'
+            command+='bule_fariy.py encrypt\r\n'
+            command+='git add .\r\n'
+            command+='git rm .\\keys.pem --cache\r\n'
+            command+='git rm .\\push.bat --cache\r\n'
+            
+            for file_index in current_dir_file_list :
+                if 'packet.pck'==file_index[1] :
+                    continue
+                elif 'bule_fariy.py'==file_index[1] :
+                    continue
+                elif not -1==file_index[0].find('.git') :
+                    continue
+                    
+                command+='git rm .\\'+get_relative_path(file_index[0])+' --cache\r\n'
+            
+            command+='git commit -m "."\r\n'
+            command+='git push\r\n'
+            command+='bule_fariy.py decrypt\r\n'
+            command+='@echo on\r\n'
+#            command+='del %1'
+
+            build_push_bat(command)
         
     print_help()
