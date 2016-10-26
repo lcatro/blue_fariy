@@ -123,7 +123,7 @@ def print_help() :
 
 if __name__=='__main__' :
     if 2==len(sys.argv) :
-        if 'e'==sys.argv[1] :
+        if 'encrypt'==sys.argv[1] :
             start_tick=time.time()
             
             build_new_rsa_keys()
@@ -157,7 +157,7 @@ if __name__=='__main__' :
             print 'Using time :'+str(end_tick-start_tick)
             
             exit()
-        elif 'd'==sys.argv[1] :
+        elif 'decrypt'==sys.argv[1] :
             start_tick=time.time()
             
             decrypt_cache=unpack_push_file()
@@ -172,5 +172,25 @@ if __name__=='__main__' :
                 print get_current_path()+file_index['file_relative_path']
             
             exit()
+        elif 'push'==sys.argv[1] :
+            current_dir_file_list=list_dir_file()
+            
+            os.system('bule_fariy.py encrypt')
+            os.system('git add .')
+            os.system('git rm .\keys.pem --cache')
+            os.system('git rm .\push.bat --cache')
+            
+            for file_index in current_dir_file_list :
+                if 'bule_fariy.py'==file_index[1] :
+                    continue
+                    
+                os.system('git rm .\\'+file_index[0]' --cache')
+                
+            os.system('git commit -m "."')
+            os.system('git push')
+            os.system('bule_fariy.py decrypt')
+            
+        elif 'pull'==sys.argv[1] :
+            pass
         
     print_help()
