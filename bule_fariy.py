@@ -87,7 +87,7 @@ def read_and_delete_file(file_path) :
         file_data=read_file.read()
         
         read_file.close()
-#        os.remove(file_path)
+        os.remove(file_path)
         
         return file_data
     
@@ -108,18 +108,18 @@ def unpack_push_file() :
         decrypt_cache=pickle.loads(rsa_decrypt(get_rsa_private_key(),serialization_data))
 
         push_file.close()
-#        os.remove(get_current_path()+'packet.pck')
+        os.remove(get_current_path()+'packet.pck')
 
         return decrypt_cache
     
 def print_help() :
     print 'Using :'
     print ''
-    print '    bule_fariy.py e|d'
+    print '    bule_fariy.py encrypt|decrypt'
     print ''
-    print '    bule_fariy.py e    encrypt current path all file'
-    print '    bule_fariy.py d    decrypt current path all file'
-    
+    print '    bule_fariy.py encrypt    encrypt current path all file'
+    print '    bule_fariy.py decrypt    decrypt current path all file'
+           
 
 if __name__=='__main__' :
     if 2==len(sys.argv) :
@@ -172,25 +172,5 @@ if __name__=='__main__' :
                 print get_current_path()+file_index['file_relative_path']
             
             exit()
-        elif 'push'==sys.argv[1] :
-            current_dir_file_list=list_dir_file()
-            
-            os.system('bule_fariy.py encrypt')
-            os.system('git add .')
-            os.system('git rm .\keys.pem --cache')
-            os.system('git rm .\push.bat --cache')
-            
-            for file_index in current_dir_file_list :
-                if 'bule_fariy.py'==file_index[1] :
-                    continue
-                    
-                os.system('git rm .\\'+file_index[0]' --cache')
-                
-            os.system('git commit -m "."')
-            os.system('git push')
-            os.system('bule_fariy.py decrypt')
-            
-        elif 'pull'==sys.argv[1] :
-            pass
         
     print_help()
