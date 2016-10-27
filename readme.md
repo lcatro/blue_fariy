@@ -38,3 +38,14 @@
   
 ![using_blue_fariy_push](https://raw.githubusercontent.com/lcatro/blue_fariy/master/demo_picture/using_blue_fariy_push.png)<br/>
 
+  如果希望把自己的项目和别人分享,先把github 的项目下载到本地<br/>
+  
+![download_repo](https://raw.githubusercontent.com/lcatro/blue_fariy/master/demo_picture/download_repo.png)<br/>
+
+  然后把`blue_fariy.py` 生成的密钥文件发送过去<br/>
+  
+![copy_keys_file](https://raw.githubusercontent.com/lcatro/blue_fariy/master/demo_picture/copy_keys_file.png)<br/>
+
+  最后使用控制台,输入命令`blue_fariy.py decrypt` 即可解密<br/>
+  
+![decrypt_repo](https://raw.githubusercontent.com/lcatro/blue_fariy/master/demo_picture/decrypt_repo.png)<br/>
